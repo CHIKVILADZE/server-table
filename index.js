@@ -5,16 +5,18 @@ const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const bcrypt = require('bcrypt');
 
+require('dotenv').config();
+
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
 const con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'root',
-  database: 'users',
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
 });
 
 app.get('/', (req, res) => {
@@ -88,7 +90,7 @@ const verifyJWT = (req, res, next) => {
   if (!token) {
     res.send('You have no token');
   } else {
-    jwt.verify(token, 'jwtSecret', (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         res.json({ auth: false, message: 'You failed' });
       } else {
@@ -126,7 +128,9 @@ app.post('/login', (req, res) => {
                 .send({ message: 'An error occurred during login' });
             } else if (isMatch) {
               const id = result[0].id;
-              const token = jwt.sign({ id }, 'jwtSecret', { expiresIn: 300 });
+              const token = jwt.sign({ id }, process.env.JWT_SECRET, {
+                expiresIn: 300,
+              });
 
               if (result[0].status === 'active') {
                 con.query(
