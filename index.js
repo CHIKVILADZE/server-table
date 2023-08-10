@@ -21,7 +21,7 @@ const con = mysql.createConnection({
 
 app.get('/', (req, res) => {
   con.query(
-    'SELECT id, name, email, password, last_login, registration_time, status FROM blkbktcbas6ppjs2ez1x.userslist',
+    'SELECT id, name, email, password, last_login, registration_time, status FROM users.userslist',
     (err, result) => {
       if (err) {
         console.error(err);
@@ -43,7 +43,7 @@ app.post('/register', (req, res) => {
   const status = req.body.status;
 
   con.query(
-    'SELECT * FROM users.userslist WHERE email = ?',
+    'SELECT * FROM blkbktcbas6ppjs2ez1x.userslist WHERE email = ?',
     [email],
     (err, existingUser) => {
       if (err) {
