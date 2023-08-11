@@ -63,7 +63,7 @@ app.post('/register', (req, res) => {
                 .send({ message: 'An error occurred during registration' });
             } else {
               con.query(
-                'INSERT INTO users.userslist( name, email, password, registration_time) VALUES( ?, ?, ?, ?)',
+                'INSERT INTO blkbktcbas6ppjs2ez1x.userslist( name, email, password, registration_time) VALUES( ?, ?, ?, ?)',
                 [name, email, hashedPassword, registration_time, status],
                 (insertErr, result) => {
                   if (insertErr) {
