@@ -57,10 +57,12 @@ app.post('/register', (req, res) => {
         } else {
           bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
             if (hashErr) {
-              console.error('Error during password hashing:', hashErr);
+              console.error('Error during password (bcrypt) hashing:', hashErr);
               res
                 .status(500)
-                .send({ message: 'An error occurred during registration' });
+                .send({
+                  message: 'An error occurred (bcrypt) during registration',
+                });
             } else {
               con.query(
                 'INSERT INTO blkbktcbas6ppjs2ez1x.userlist( name, email, password, registration_time) VALUES( ?, ?, ?, ?)',
