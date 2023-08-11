@@ -50,19 +50,17 @@ app.post('/register', (req, res) => {
         console.error('Error during registration:', err);
         res
           .status(500)
-          .send({ message: 'An error occurred during registration' });
+          .send({ message: '1 An error occurred during registration' });
       } else {
         if (existingUser.length > 0) {
           res.status(200).send({ message: 'User already exists' });
         } else {
           bcrypt.hash(password, 10, (hashErr, hashedPassword) => {
             if (hashErr) {
-              console.error('Error during password (bcrypt) hashing:', hashErr);
-              res
-                .status(500)
-                .send({
-                  message: 'An error occurred (bcrypt) during registration',
-                });
+              console.error('Error during password  hashing:', hashErr);
+              res.status(500).send({
+                message: '2 An error occurred  during registration',
+              });
             } else {
               con.query(
                 'INSERT INTO blkbktcbas6ppjs2ez1x.userlist( name, email, password, registration_time) VALUES( ?, ?, ?, ?)',
