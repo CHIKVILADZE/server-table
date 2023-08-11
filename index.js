@@ -21,7 +21,7 @@ const con = mysql.createConnection({
 
 app.get('/', (req, res) => {
   con.query(
-    'SELECT id, name, email, password, last_login, registration_time, status FROM users.userlist',
+    'SELECT id, name, email, password, last_login, registration_time, status FROM blkbktcbas6ppjs2ez1x.userlist',
     (err, result) => {
       if (err) {
         console.error(err);
@@ -110,7 +110,7 @@ app.post('/login', (req, res) => {
   const password = req.body.password;
 
   con.query(
-    'SELECT * FROM users.userlist WHERE email = ?',
+    'SELECT * FROM blkbktcbas6ppjs2ez1x.userlist WHERE email = ?',
     [email],
     (err, result) => {
       if (err) {
@@ -134,7 +134,7 @@ app.post('/login', (req, res) => {
 
               if (result[0].status === 'active') {
                 con.query(
-                  'UPDATE users.userlist SET last_login = NOW() WHERE id = ?',
+                  'UPDATE blkbktcbas6ppjs2ez1x.userlist SET last_login = NOW() WHERE id = ?',
                   [result[0].id],
                   (err, updateResult) => {
                     if (err) {
@@ -167,7 +167,7 @@ app.put('/block-users', (req, res) => {
   const userIds = req.body.userIds;
 
   con.query(
-    'UPDATE users.userlist SET status = ? WHERE id IN (?) AND status = ?',
+    'UPDATE blkbktcbas6ppjs2ez1x.userlist SET status = ? WHERE id IN (?) AND status = ?',
     ['blocked', userIds, 'active'],
     (err, result) => {
       if (err) {
@@ -186,7 +186,7 @@ app.put('/unblock-users', (req, res) => {
   const userIds = req.body.userIds;
 
   con.query(
-    'UPDATE users.userlist SET status = ? WHERE id IN (?) AND status = ?',
+    'UPDATE blkbktcbas6ppjs2ez1x.userlist SET status = ? WHERE id IN (?) AND status = ?',
     ['active', userIds, 'blocked'],
     (err, result) => {
       if (err) {
@@ -204,7 +204,7 @@ app.put('/unblock-users', (req, res) => {
 app.delete('/users/:id', (req, res) => {
   const userId = req.params.id;
   con.query(
-    'DELETE FROM users.userslist WHERE id = ?',
+    'DELETE FROM blkbktcbas6ppjs2ez1x.userlist WHERE id = ?',
     [userId],
     (err, result) => {
       if (err) {
