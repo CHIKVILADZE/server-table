@@ -43,7 +43,7 @@ app.post('/register', (req, res) => {
   const status = req.body.status;
 
   con.query(
-    'SELECT * FROM blkbktcbas6ppjs2ez1x.userslist WHERE email = ?',
+    'SELECT * FROM blkbktcbas6ppjs2ez1x.userlist WHERE email = ?',
     [email],
     (err, existingUser) => {
       if (err) {
@@ -63,7 +63,7 @@ app.post('/register', (req, res) => {
                 .send({ message: 'An error occurred during registration' });
             } else {
               con.query(
-                'INSERT INTO blkbktcbas6ppjs2ez1x.userslist( name, email, password, registration_time) VALUES( ?, ?, ?, ?)',
+                'INSERT INTO blkbktcbas6ppjs2ez1x.userlist( name, email, password, registration_time) VALUES( ?, ?, ?, ?)',
                 [name, email, hashedPassword, registration_time, status],
                 (insertErr, result) => {
                   if (insertErr) {
@@ -110,7 +110,7 @@ app.post('/login', (req, res) => {
   const password = req.body.password;
 
   con.query(
-    'SELECT * FROM users.userslist WHERE email = ?',
+    'SELECT * FROM users.userlist WHERE email = ?',
     [email],
     (err, result) => {
       if (err) {
@@ -134,7 +134,7 @@ app.post('/login', (req, res) => {
 
               if (result[0].status === 'active') {
                 con.query(
-                  'UPDATE users.userslist SET last_login = NOW() WHERE id = ?',
+                  'UPDATE users.userlist SET last_login = NOW() WHERE id = ?',
                   [result[0].id],
                   (err, updateResult) => {
                     if (err) {
@@ -167,7 +167,7 @@ app.put('/block-users', (req, res) => {
   const userIds = req.body.userIds;
 
   con.query(
-    'UPDATE users.userslist SET status = ? WHERE id IN (?) AND status = ?',
+    'UPDATE users.userlist SET status = ? WHERE id IN (?) AND status = ?',
     ['blocked', userIds, 'active'],
     (err, result) => {
       if (err) {
@@ -186,7 +186,7 @@ app.put('/unblock-users', (req, res) => {
   const userIds = req.body.userIds;
 
   con.query(
-    'UPDATE users.userslist SET status = ? WHERE id IN (?) AND status = ?',
+    'UPDATE users.userlist SET status = ? WHERE id IN (?) AND status = ?',
     ['active', userIds, 'blocked'],
     (err, result) => {
       if (err) {
@@ -219,6 +219,6 @@ app.delete('/users/:id', (req, res) => {
   );
 });
 
-app.listen(process.env.PORT, () => {
+app.listen(8081, () => {
   console.log('Server is running on port 8081');
 });
