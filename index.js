@@ -69,7 +69,7 @@ app.post('/register', (req, res) => {
                   if (insertErr) {
                     console.error('Error during registration:', insertErr);
                     res.status(500).send({
-                      message: 'An error occurred during registration',
+                      message: '3 An error occurred during registration',
                     });
                   } else {
                     res.send(result);
