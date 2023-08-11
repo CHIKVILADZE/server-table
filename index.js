@@ -21,7 +21,7 @@ const con = mysql.createConnection({
 
 app.get('/', (req, res) => {
   con.query(
-    'SELECT id, name, email, password, last_login, registration_time, status FROM blkbktcbas6ppjs2ez1x.userlist',
+    'SELECT id, name, email, password, last_login, registration_time, status FROM users.userlist',
     (err, result) => {
       if (err) {
         console.error(err);
